@@ -344,7 +344,6 @@ const Home: NextPage = () => {
             alt="Certik Logo"
             width={100}
             height={40}
-            className={styles.certik}
           />
         </div>
     </div>
