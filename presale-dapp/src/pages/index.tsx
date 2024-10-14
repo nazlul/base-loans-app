@@ -18,12 +18,17 @@ const Home: NextPage = () => {
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [ownerAddress, setOwnerAddress] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const addRecentTransaction = useAddRecentTransaction();
 
   const handleErrorClose = () => {
     setError(null);
     setErrorDismissed(true); 
   };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
 
   const setErrorWithCheck = (message: string) => {
     if (!errorDismissed) {
@@ -40,7 +45,7 @@ const Home: NextPage = () => {
         return;
     }
     const parsedValue = parseFloat(inputValue); 
-    const minimumInput = 0.0001;
+    const minimumInput = 0.025;
 
     if (isNaN(parsedValue)) {
         setError('Invalid input. Please enter a valid number.');
@@ -260,15 +265,28 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Presale Launchpad</title>
-        <meta content="Base Presale App" name="description" />
+        <title>Base Loans App</title>
+        <meta content="Base Loans App" name="description" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-
+      
+      <div className={`${styles.menu} ${menuOpen ? styles.active : ''}`}>
+        <button className={styles.navTgl} onClick={toggleMenu} aria-label="toggle menu">
+          <span aria-hidden="true"></span>
+        </button>
+        <nav className={styles.nav}>
+          <ul>
+            <li>Home</li>
+            <li>Docs</li>
+            <li>About Us</li>
+          </ul>
+        </nav>
+      </div>
+      
       <header className={styles.header}>
         <ConnectButton label="Connect" showBalance={true} />
       </header>
-
+      
       <main className={styles.main}>
         <div className={styles.version}> 
           Beta 1.4.2
@@ -281,7 +299,7 @@ const Home: NextPage = () => {
             height={50}
             className={styles.logo}
           />
-          <h1>Deposit</h1>
+          <h2 className={styles.title}>Deposit</h2>
           <div className={styles.transaction}>
             <div className={styles.input}>
               <label htmlFor="amount">ETH</label>
@@ -294,6 +312,7 @@ const Home: NextPage = () => {
               />
               <span>Balance: {balance} ETH</span>
             </div>
+            <h2 className={styles.title}>Receive</h2>
             <div className={styles.output}>
               <label  htmlFor="output-amount">ETH</label>
               <input
@@ -336,8 +355,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         )}
-      </main>
-      <div className={styles.footer}>
+        <div className={styles.footer}>
         Audited by
         <Image
             src="/assets/certik.png"
@@ -346,6 +364,7 @@ const Home: NextPage = () => {
             height={40}
           />
         </div>
+      </main>
     </div>
   );
 };

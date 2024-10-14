@@ -9,6 +9,162 @@
   color: white;
 }
 
+.title {
+  display: flex;
+  justify-content: center; 
+}
+
+.menu {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.nav {
+    display: none;
+}
+
+.menu.active .nav {
+  display: block; 
+}
+
+.navTgl {
+  display: inline-block;
+  cursor: pointer;
+  position: fixed;
+  z-index: 100;
+  left: 30px; 
+  top: 30px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  transition: backdrop-filter 0.3s ease;
+  padding: 0;
+  background: #000000;
+  box-shadow: 0px 4px 24px rgba(0, 26, 255, 0.24);
+  line-height: 0.6;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .navTgl {
+    top: 5px;
+    left: 5px;
+    width: 45px;
+    height: 45px; 
+  }
+}
+
+.navTgl > span {
+  display: inline-block;
+  position: relative;
+  height: 2px;
+  width: 34px;
+  border-radius: 1px;
+  background: rgb(6, 55, 139);
+  vertical-align: middle;
+}
+
+.navTgl > span:before,
+.navTgl > span:after {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  height: 2px;
+  border-radius: 1px;
+  background: rgb(6, 55, 139);
+  transition: all 200ms;
+}
+
+.navTgl > span:before {
+  top: -11px;
+  left: 3px;
+  width: 28px;
+}
+
+.navTgl > span:after {
+  top: 11px;
+  left: 6px;
+  width: 22px;
+}
+
+.navTgl:focus {
+  outline: none;
+}
+
+.navTgl:hover > span:after,
+.navTgl:hover > span:before {
+  width: 34px;
+  left: 0;
+}
+
+.nav:before {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  transition: clip-path 1s ease-in-out, opacity 1s ease-in-out;
+  clip-path: circle(30px at calc(100% - 65px) 65px);
+  opacity: 0;
+  backdrop-filter: blur(10px);
+}
+
+.menu.active .nav:before {
+  clip-path: circle(100%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu.active .navTgl > span {
+  height: 0;
+}
+
+.menu.active .navTgl > span:before,
+.menu.active .navTgl > span:after {
+  top: 0;
+  left: 0;
+  width: 34px;
+}
+
+.menu.active .navTgl > span:after {
+  transform: rotate(-45deg);
+}
+
+.menu.active .navTgl > span:before {
+  transform: rotate(45deg);
+}
+
+.nav ul {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  list-style-type: none;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  z-index: 99;  
+}
+
+.nav ul li {
+  margin: 15px 0;
+  font-size: 24px;
+  color: white;
+  transition: color 300ms ease;
+}
+
+.nav ul li:hover {
+  color: rgb(6, 55, 139); 
+}
+
 .header :global(button){
   position: absolute !important;
   top: 20px !important;
@@ -24,10 +180,15 @@
   font-size: 14px; 
   color: #ffffff; 
   margin-bottom: 8px; 
-  text-align: center;
+  text-align: left;
   font-family: "courier";
 }
 
+@media (max-width: 600px) {
+  .version {
+    margin-left: -260px;
+  }
+}
 .main {
   display: flex;
   align-items: center;
