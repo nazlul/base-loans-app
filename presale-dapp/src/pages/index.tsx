@@ -283,9 +283,23 @@ const Home: NextPage = () => {
         </nav>
       </div>
       
-      <header className={styles.header}>
-        <ConnectButton label="Connect" showBalance={true} />
-      </header>
+      {!menuOpen && (
+        <>
+          <header className={styles.header}>
+            <ConnectButton label="Connect" showBalance={true} />
+          </header>
+
+          <footer className={styles.footer}>
+            Audited by
+            <Image
+              src="/assets/certik.png"
+              alt="Certik Logo"
+              width={100}
+              height={35}
+            />
+          </footer>
+        </>
+      )}
       
       <main className={styles.main}>
         <div className={styles.version}> 
@@ -332,13 +346,16 @@ const Home: NextPage = () => {
                   <span>~ 0 ETH</span>
                 </div>
             </div>
-            <div className={styles.connectWalletWrapper}>
-              {isConnected ? (
-                <button onClick={handleDeposit}>Deposit</button>
-              ) : (
-                <ConnectButton />
-              )}
-            </div>
+            {!menuOpen && (
+            <> 
+              <div className={styles.connectWalletWrapper}>
+                  {isConnected ? (
+                    <button onClick={handleDeposit}>Deposit</button>
+                  ) : (
+                    <ConnectButton />
+                  )}
+              </div>
+            </> )}
             {error && (
               <div className={styles.errorBox}>
                 <span className={styles.closeButton} onClick={handleErrorClose}>&times;</span>
@@ -355,15 +372,6 @@ const Home: NextPage = () => {
             </div>
           </div>
         )}
-        <div className={styles.footer}>
-        Audited by
-        <Image
-            src="/assets/certik.png"
-            alt="Certik Logo"
-            width={100}
-            height={40}
-          />
-        </div>
       </main>
     </div>
   );

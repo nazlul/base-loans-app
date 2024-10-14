@@ -56,6 +56,10 @@
     width: 45px;
     height: 45px; 
   }
+  .title{
+    margin-top: -4px;
+    margin-bottom: -1px;
+  }
 }
 
 .navTgl > span {
