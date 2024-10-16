@@ -114,16 +114,15 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.8);
-  transition: clip-path 1s ease-in-out, opacity 1s ease-in-out;
-  clip-path: circle(30px at calc(100% - 65px) 65px);
-  opacity: 0;
+  transition: all 500ms ease-in-out;
+  clip-path: circle(30px at calc(0% + 55px) 55px);
+  visibility: hidden;
   backdrop-filter: blur(10px);
 }
 
-.menu.active .nav:before {
-  clip-path: circle(100%);
-  opacity: 1;
-  pointer-events: auto;
+.menu.active .nav:before { 
+    visibility: visible;
+    clip-path: circle(100%);
 }
 
 .menu.active .navTgl > span {
@@ -163,10 +162,18 @@
   font-size: 24px;
   color: white;
   transition: color 300ms ease;
+  margin-bottom: 35px;
 }
 
 .nav ul li:hover {
-  color: rgb(6, 55, 139); 
+  color: rgb(3, 77, 205); 
+}
+
+@media (min-width: 600px) {
+  .nav ul li:hover {
+    font-size: 26px;
+    transition: font-size 200ms;
+  }
 }
 
 .header :global(button){

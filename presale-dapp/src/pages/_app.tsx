@@ -15,7 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
         <RainbowKitProvider 
-          coolMode 
           showRecentTransactions={true}
           initialChain={baseSepolia}
           theme={darkTheme({

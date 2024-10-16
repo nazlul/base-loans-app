@@ -11,6 +11,7 @@ import { contractABI, contractAddress } from "../utils/constants";
 const Home: NextPage = () => {
   const { isConnected, address } = useAccount();
   const [balance, setBalance] = useState<number | null>(null);
+  const [contractBalance, setContractBalance] = useState<number | null>(null);
   const [amount, setAmount] = useState<string>('');
   const [outputAmount, setOutputAmount] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
@@ -28,6 +29,7 @@ const Home: NextPage = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+    
   }
 
   const setErrorWithCheck = (message: string) => {
@@ -218,6 +220,25 @@ const Home: NextPage = () => {
     }
   };
 
+  const fetchContractBalance = async () => {
+    if (!provider || !contractAddress) return;
+  
+    try {
+      const balanceInWei = await provider.getBalance(contractAddress);
+      const balanceInEth = parseFloat(formatEther(balanceInWei));
+      setContractBalance(balanceInEth);
+    } catch (err) {
+      console.error('Error fetching contract balance:', err);
+      setError('Failed to fetch contract balance');
+    }
+  };
+
+  useEffect(() => {
+    if (isConnected && address === ownerAddress) {
+      fetchContractBalance();
+    }
+  }, [isConnected, address]);
+
   const handleWithdraw = async () => {
     if (!contract) {
       setError('Contract not initialized. Please connect your wallet.');
@@ -305,68 +326,73 @@ const Home: NextPage = () => {
         <div className={styles.version}> 
           Beta 1.4.2
         </div>
-        <div className={styles.card}>
-          <Image
-            src="/assets/base.png"
-            alt="Logo"
-            width={50}
-            height={50}
-            className={styles.logo}
-          />
-          <h2 className={styles.title}>Deposit</h2>
-          <div className={styles.transaction}>
-            <div className={styles.input}>
-              <label htmlFor="amount">ETH</label>
-              <input
-                id="amount"
-                type="number"
-                step="0.01"
-                value={amount}
-                onChange={handleInputChange}
-              />
-              <span>Balance: {balance} ETH</span>
-            </div>
-            <h2 className={styles.title}>Receive</h2>
-            <div className={styles.output}>
-              <label  htmlFor="output-amount">ETH</label>
-              <input
-              id="output-amount"
-              type="text"
-              value={outputAmount.toFixed(3)}
-              readOnly
+        {address !== ownerAddress && (
+          <div className={styles.card}>
+            <Image
+              src="/assets/base.png"
+              alt="Logo"
+              width={50}
+              height={50}
+              className={styles.logo}
             />
-            </div>
-            <div className={styles.details}>
-                <div>
-                  <label>Transfer time</label>
-                  <span>~15 sec</span>
-                </div>
-                <div>
-                  <label>Network fees</label>
-                  <span>~ 0 ETH</span>
-                </div>
-            </div>
-            {!menuOpen && (
-            <> 
-              <div className={styles.connectWalletWrapper}>
-                  {isConnected ? (
-                    <button onClick={handleDeposit}>Deposit</button>
-                  ) : (
-                    <ConnectButton />
-                  )}
+            <h2 className={styles.title}>Deposit</h2>
+            <div className={styles.transaction}>
+              <div className={styles.input}>
+                <label htmlFor="amount">ETH</label>
+                <input
+                  id="amount"
+                  type="number"
+                  step="0.01"
+                  value={amount}
+                  onChange={handleInputChange}
+                />
+                <span>Balance: {balance} ETH</span>
               </div>
-            </> )}
-            {error && (
-              <div className={styles.errorBox}>
-                <span className={styles.closeButton} onClick={handleErrorClose}>&times;</span>
-                {error}
+              <h2 className={styles.title}>Receive</h2>
+              <div className={styles.output}>
+                <label  htmlFor="output-amount">ETH</label>
+                <input
+                id="output-amount"
+                type="text"
+                value={outputAmount.toFixed(3)}
+                readOnly
+              />
               </div>
-            )}
+              <div className={styles.details}>
+                  <div>
+                    <label>Transfer time</label>
+                    <span>~15 sec</span>
+                  </div>
+                  <div>
+                    <label>Network fees</label>
+                    <span>~ 0 ETH</span>
+                  </div>
+              </div>
+              {!menuOpen && (
+              <> 
+                <div className={styles.connectWalletWrapper}>
+                    {isConnected ? (
+                      <button onClick={handleDeposit}>Initiate</button>
+                    ) : (
+                      <ConnectButton />
+                    )}
+                </div>
+              </> )}
+              {error && (
+                <div className={styles.errorBox}>
+                  <span className={styles.closeButton} onClick={handleErrorClose}>&times;</span>
+                  {error}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
         {isConnected && address === ownerAddress && (
           <div className={styles.card}>
             <h1>Withdraw</h1>
+            {contractBalance !== null && (
+              <p>Contract Balance: {contractBalance.toFixed(3)} ETH</p>
+            )}
             <div className={styles.connectWalletWrapper}>
               <button onClick={handleWithdraw}>Withdraw All</button>
             </div>
