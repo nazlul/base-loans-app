@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract ETHTransfer {
-    address public constant withdrawer = 0x919510c65290372eDeae400f70Db13329e64529D;
+    address public constant withdrawer = 0x70070F01aA27FDf096e7d01D2e37770c09cbb41f;
 
     event Deposit(address indexed from, uint256 amount);
     event Withdrawal(address indexed to, uint256 amount);

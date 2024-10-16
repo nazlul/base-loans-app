@@ -18,9 +18,9 @@ const Home: NextPage = () => {
   const [errorDismissed, setErrorDismissed] = useState<boolean>(false);
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
-  const [ownerAddress, setOwnerAddress] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const addRecentTransaction = useAddRecentTransaction();
+  const ownerAddress= "0x70070F01aA27FDf096e7d01D2e37770c09cbb41f";
 
   const handleErrorClose = () => {
     setError(null);
@@ -122,16 +122,6 @@ const Home: NextPage = () => {
       
       console.log("Contract initialized:", transactionsContract);
       setContract(transactionsContract);
-  
-      const contractOwner = await transactionsContract.owner();
-      if (!contractOwner) {
-        console.error('Failed to fetch contract owner.');
-        setError('Failed to fetch contract owner.');
-        return;
-      }
-  
-      console.log("Contract owner:", contractOwner);
-      setOwnerAddress(contractOwner);
   
     } catch (err) {
       if (err instanceof Error) {

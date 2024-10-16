@@ -8,10 +8,8 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const ownerAddress = '0x859e52d37CD8B156EcF14E94287B33cE859bC8Df'; 
-
   const ETHTransfer = await hre.ethers.getContractFactory("ETHTransfer");
-  const ethTransfer = await ETHTransfer.deploy(ownerAddress);
+  const ethTransfer = await ETHTransfer.deploy();
 
   await ethTransfer.deployed();
 
