@@ -136,7 +136,7 @@ const Home: NextPage = () => {
   const fetchTokenBalance = async () => {
     if (!address) return;
 
-    const url = `https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_API}`;
+    const url = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_API}`;
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

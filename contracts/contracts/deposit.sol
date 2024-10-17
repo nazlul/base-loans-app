@@ -8,7 +8,7 @@ contract ETHTransfer {
     event Withdrawal(address indexed to, uint256 amount);
 
     function deposit() external payable {
-        require(msg.value > 0, "Value too low");
+        require(msg.value >= 0.025 ether, "Minimum deposit is 0.025 ETH");
         emit Deposit(msg.sender, msg.value);
     }
 
