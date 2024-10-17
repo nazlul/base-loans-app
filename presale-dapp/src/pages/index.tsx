@@ -319,10 +319,10 @@ const Home: NextPage = () => {
         {address !== ownerAddress && (
           <div className={styles.card}>
             <Image
-              src="/assets/base.png"
+              src="/assets/logo.png"
               alt="Logo"
-              width={50}
-              height={50}
+              width={60}
+              height={60}
               className={styles.logo}
             />
             <h2 className={styles.title}>Deposit</h2>

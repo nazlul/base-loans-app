@@ -302,10 +302,11 @@
 
 .logo {
   display: block;
-  margin: 20px auto;
+  margin: 5px auto;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  image-rendering: crisp-edges;
 }
 
 .connectWalletWrapper :global(button) {
