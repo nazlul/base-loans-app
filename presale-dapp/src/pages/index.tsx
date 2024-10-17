@@ -321,8 +321,8 @@ const Home: NextPage = () => {
             <Image
               src="/assets/logo.png"
               alt="Logo"
-              width={60}
-              height={60}
+              width={80}
+              height={80}
               className={styles.logo}
             />
             <h2 className={styles.title}>Deposit</h2>

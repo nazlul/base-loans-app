@@ -308,6 +308,7 @@
   border-radius: 50%;
   image-rendering: crisp-edges;
   mix-blend-mode: multiply;
+  filter: brightness(0) invert(1);
 }
 
 .connectWalletWrapper :global(button) {
