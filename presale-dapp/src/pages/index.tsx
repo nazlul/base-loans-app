@@ -319,7 +319,7 @@ const Home: NextPage = () => {
         {address !== ownerAddress && (
           <div className={styles.card}>
             <Image
-              src="/assets/logo.png"
+              src="/assets/logoapp.svg"
               alt="Logo"
               width={80}
               height={80}
